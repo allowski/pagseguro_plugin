@@ -1,0 +1,96 @@
+group 'com.pagseguro.pagseguroplugin'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    ext.kotlin_version = '1.3.50'
+    repositories {
+        google()
+        jcenter()
+        maven { url 'https://plugins.gradle.org/m2/'}
+
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.5.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        google()
+        jcenter()
+
+        google()
+
+        jcenter()
+
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
+
+
+        maven { url 'https://maven.fabric.io/public' }
+
+        mavenCentral()
+
+
+        maven { url "https://jitpack.io" }
+
+        maven {
+            url 'https://dl.google.com/dl/android/maven2'
+        }
+
+        /**
+         *  Repositorios da PagSeguro
+         *  - Gradle do projeto
+         */
+
+        // Repositorio do SDK conforme documentado.
+
+        maven {
+            url 'https://github.com/pagseguromaster/plugpag/raw/master/3.x/android'
+        }
+
+        maven {
+            url 'https://github.com/pagseguro/PlugPagServiceWrapper/raw/master'
+        }
+
+        maven { url "https://packagecloud.io/stone/sdk-android/maven2" }
+        maven { url "https://packagecloud.io/stone/sdk-android-snapshot/maven2" }
+        //maven { url 'https://github.com/pagseguromaster/plugpag/raw/master/android' }
+    }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion 28
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+    defaultConfig {
+        minSdkVersion 16
+    }
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+
+    // Pagseguro dependencies
+    implementation 'br.com.uol.pagseguro:plugpag:3.1.1'
+    implementation 'br.com.uol.pagseguro.plugpagservice.wrapper:wrapper:1.6.0'
+
+    implementation 'org.projectlombok:lombok:1.18.12'
+
+    compileOnly 'org.projectlombok:lombok:1.18.12'
+
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+}
